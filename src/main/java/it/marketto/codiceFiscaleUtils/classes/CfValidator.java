@@ -1,34 +1,32 @@
 package it.marketto.codiceFiscaleUtils.classes;
 
 import it.marketto.codiceFiscaleUtils.constants.Settings;
+import it.marketto.codiceFiscaleUtils.gender.Gender;
+import it.marketto.codiceFiscaleUtils.gender.Genders;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.time.*;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
+import java.util.*;
 
 public class CfValidator {
 
+	// Codice Fiscale
 	public static CfMismatchValidator codiceFiscale(String codiceFiscale) {
 		return new CfMismatchValidator(codiceFiscale);
 	}
 
+	// Last Name
 	public static boolean isLastNameValid(String lastName) {
-		return CfPattern.lastName().asPredicate().test(lastName);
-	}
-	public static boolean isLastNameInvalid(String lastName) {
-		return !StringUtils.isEmpty(lastName) && !isLastNameValid(lastName);
+		return !StringUtils.isEmpty(lastName) && CfPattern.lastName().asPredicate().test(lastName);
 	}
 
+	// First Name
 	public static boolean isFirstNameValid(String firstName) {
-		return CfPattern.firstName().asPredicate().test(firstName);
-	}
-	public static boolean isFirstNameInvalid(String firstName) {
-		return !StringUtils.isEmpty(firstName) && !isFirstNameValid(firstName);
+		return !StringUtils.isEmpty(firstName) && CfPattern.firstName().asPredicate().test(firstName);
 	}
 
+	// BirthDate
 	public static boolean isBirthDateValid(ZonedDateTime date) {
 		return date != null;
 	}
@@ -49,20 +47,16 @@ public class CfValidator {
 		}
 	}
 
-
-	public static boolean isBirthDateInvalid(ZonedDateTime date) {
-		return false;
+	public static boolean isGenderValid(Character gender) {
+		return gender != null && Arrays.stream(Gender.toArray())
+				.filter(g -> g.toString().charAt(0) == Character.toUpperCase(gender))
+				.findFirst()
+				.orElse(null) != null;
 	}
-	public static boolean isBirthDateInvalid(Integer year, Integer month, Integer day) {
-		if (year == null && month == null && day == null) {
-			return false;
-		}
-		if (year == null || ( month == null  && day != null)) {
-			return true;
-		}
-		return !isBirthDateValid(year, month != null ? month : 1, day != null ? day : 1);
-	}
-	public static boolean isBirthDateInvalid(LocalDate date) {
-		return false;
+	public static boolean isGenderValid(String gender) {
+		return !StringUtils.isEmpty(gender) && Arrays.stream(Gender.toArray())
+				.filter(g -> g.toString().equalsIgnoreCase(gender))
+				.findFirst()
+				.orElse(null) != null;
 	}
 }

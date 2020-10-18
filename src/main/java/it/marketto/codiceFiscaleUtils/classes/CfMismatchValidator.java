@@ -129,7 +129,4 @@ public class CfMismatchValidator {
             // && CfParser.cfToBirthPlace(this.codiceFiscale)
         );
     }
-    public boolean isInvalid() {
-        return !StringUtils.isEmpty(this.codiceFiscale) && !this.isValid();
-    }
 }
