@@ -2,6 +2,7 @@ package it.marketto.codiceFiscaleUtils.classes;
 
 import it.marketto.codiceFiscaleUtils.constants.CfOffsets;
 import it.marketto.codiceFiscaleUtils.constants.GenericMatchers;
+import it.marketto.codiceFiscaleUtils.constants.Settings;
 import it.marketto.codiceFiscaleUtils.enumerators.CRC;
 import it.marketto.codiceFiscaleUtils.enumerators.Omocodes;
 
@@ -114,22 +115,6 @@ public class CfParser {
 
     public static String cfToBirthPlace(String codiceFiscale) {
         return null;
-    }
-
-    public static Calendar yearMonthDayToDate(Integer year, Integer month, Integer day) {
-        Calendar calendar = null;
-        if (year != null) {
-            calendar = Calendar.getInstance();
-            calendar.setTimeZone(TimeZone.getTimeZone("Europe/Rome"));
-            calendar.set(Calendar.YEAR, year);
-            if (month != null) {
-                calendar.set(Calendar.MONTH, month);
-                if (day != null) {
-                    calendar.set(Calendar.DAY_OF_MONTH, day);
-                }
-            }
-        }
-        return calendar;
     }
 
     public static String encodeCf(PersonalInfo personalInfo) {

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 
 @Getter
@@ -16,7 +17,7 @@ public class PersonalInfo {
 	private String firstName;
     private String lastName;
 
-    private Calendar date;
+    private ZonedDateTime date;
     private Integer day;
     private Integer month;
     private Integer year;
