@@ -1,9 +1,10 @@
 package it.marketto.codiceFiscaleUtils.gender;
 
-import java.util.Arrays;
-import java.util.Optional;
+import it.marketto.codiceFiscaleUtils.enumerators.Genders;
 
-public class Gender {
+import java.util.Arrays;
+
+public class GenderUtils {
 	private static int MAX_MONTH_DAY = 31;
 
 	public static Integer getDay(int genderDay) {
@@ -11,19 +12,7 @@ public class Gender {
         return (plainDay > 0 && plainDay <= MAX_MONTH_DAY) ? plainDay : null;
     }
 
-    public static Genders getGender(Integer genderDay) {
-    	return Arrays.stream(toArray())
-    		.filter(gender -> genderDay >= gender.toValue() && genderDay <= gender.toValue() + MAX_MONTH_DAY)
-    		.findFirst()
-    		.orElse(null);
-    }
-
     public static Integer genderizeDay(int day, Genders gender) {
         return day + gender.toValue();
     }
-
-    public static Genders[] toArray() {
-		return new Genders[]{ Genders.MALE, Genders.FEMALE };
-    }
-
 }

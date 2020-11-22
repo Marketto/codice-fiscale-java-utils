@@ -43,15 +43,15 @@ public enum CRC {
 		return toString().charAt(0);
 	}
 
-	public static CRC from(char c) {
+	public static CRC from(char crcChar) {
 		return Arrays.stream(values())
-			.filter(crc -> crc.toString().equalsIgnoreCase(String.valueOf(c)))
+			.filter(crc -> crc.toString().equalsIgnoreCase(String.valueOf(crcChar)))
 			.findFirst()
             .orElse(null);
 	}
-	public static CRC from(int val) {
+	public static CRC from(int value) {
 		return Arrays.stream(values())
-			.filter(crc -> crc.toValue() == val)
+			.filter(crc -> crc.toValue() == value)
 			.findFirst()
             .orElse(null);
 	}

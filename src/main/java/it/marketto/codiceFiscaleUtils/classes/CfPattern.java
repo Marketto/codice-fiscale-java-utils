@@ -2,14 +2,10 @@ package it.marketto.codiceFiscaleUtils.classes;
 
 import it.marketto.codiceFiscaleUtils.constants.CfMatchers;
 import it.marketto.codiceFiscaleUtils.constants.CfOffsets;
-import it.marketto.codiceFiscaleUtils.exceptions.InvalidLastNameException;
-import it.marketto.codiceFiscaleUtils.gender.Genders;
-import lombok.val;
-import org.apache.commons.lang3.Functions;
+import it.marketto.codiceFiscaleUtils.enumerators.Genders;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.ZonedDateTime;
-import java.util.Calendar;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -17,7 +13,7 @@ import java.util.regex.Pattern;
 public class CfPattern {
 	public static Pattern cfLastName(String lastName) {
         String matcher = CfMatchers.CF_SURNAME_MATCHER;
-        if (lastName != null) {
+        if (!StringUtils.isEmpty(lastName)) {
             if (!lastName().asPredicate().test(lastName)) {
             	// throw new InvalidLastNameException();
             }
@@ -26,16 +22,28 @@ public class CfPattern {
         return isolatedInsensitiveTailor(matcher);
     }
 
-    private static Pattern cfFirstName(String firstName) {
-		return null;
+    public static Pattern cfFirstName(String firstName) {
+		String matcher = CfMatchers.CF_SURNAME_MATCHER;
+		if (!StringUtils.isEmpty(firstName)) {
+			if (!lastName().asPredicate().test(firstName)) {
+				// throw new InvalidLastNameException();
+			}
+			//matcher = CfParser.lastNameToCf(lastName) || matcher;
+		}
+		return isolatedInsensitiveTailor(matcher);
 	}
 
 	private static Pattern cfDateGender(ZonedDateTime date, Genders gender) {
 		return null;
 	}
 
-	private static Pattern cfPlace(ZonedDateTime date, String place) {
-		return null;
+	public static Pattern cfBirthPlace(String belfioreCode) {
+		String matcher = CfMatchers.BELFIORE_CODE_MATCHER;
+		if (!StringUtils.isEmpty(belfioreCode)) {
+
+			//matcher = CfParser.belfioreCodeToCf(belfioreCode) || matcher;
+		}
+		return isolatedInsensitiveTailor(matcher);
 	}
 
 	/**
@@ -73,7 +81,7 @@ public class CfPattern {
 							(v) -> cfLastName(personalInfo.getLastName()),
 							(v) -> cfFirstName(personalInfo.getFirstName()),
 							(v) -> cfDateGender(dtParams, personalInfo.getGender()),
-							(v) -> cfPlace(dtParams, personalInfo.getPlace())
+							(v) -> cfBirthPlace(personalInfo.getPlace())
 					};
 
 					matcher = "";

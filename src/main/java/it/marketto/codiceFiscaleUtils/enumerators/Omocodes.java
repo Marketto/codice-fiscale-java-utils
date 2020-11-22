@@ -29,15 +29,15 @@ public enum Omocodes {
 		return toString().charAt(0);
 	}
 
-	public static Omocodes from(char c) {
+	public static Omocodes from(char crcChar) {
 		return Arrays.stream(values())
-			.filter(omocode -> omocode.toString().equalsIgnoreCase(String.valueOf(c)))
+			.filter(omocode -> omocode.toString().equalsIgnoreCase(String.valueOf(crcChar)))
 			.findFirst()
 			.orElse(null);
 	}
-	public static Omocodes from(int val) {
+	public static Omocodes from(int value) {
 		return Arrays.stream(values())
-			.filter(omocode -> omocode.toValue() == val)
+			.filter(omocode -> omocode.toValue() == value)
 			.findFirst()
 			.orElse(null);
 	}

@@ -1,10 +1,8 @@
 package it.marketto.codiceFiscaleUtils.classes;
 
 import it.marketto.codiceFiscaleUtils.constants.CfOffsets;
-import it.marketto.codiceFiscaleUtils.gender.Genders;
+import it.marketto.codiceFiscaleUtils.enumerators.Genders;
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.regex.Pattern;
 
 public class CfMismatchValidator {
 	

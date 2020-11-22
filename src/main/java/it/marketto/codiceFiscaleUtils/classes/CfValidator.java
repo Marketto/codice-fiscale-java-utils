@@ -1,10 +1,8 @@
 package it.marketto.codiceFiscaleUtils.classes;
 
-import it.marketto.codiceFiscaleUtils.constants.Settings;
-import it.marketto.codiceFiscaleUtils.gender.Gender;
-import it.marketto.codiceFiscaleUtils.gender.Genders;
+import it.marketto.codiceFiscaleUtils.enumerators.Genders;
+import it.marketto.codiceFiscaleUtils.gender.GenderUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 
 import java.time.*;
 import java.util.*;
@@ -48,15 +46,16 @@ public class CfValidator {
 	}
 
 	public static boolean isGenderValid(Character gender) {
-		return gender != null && Arrays.stream(Gender.toArray())
+		return gender != null && Arrays.stream(Genders.values())
 				.filter(g -> g.toString().charAt(0) == Character.toUpperCase(gender))
 				.findFirst()
 				.orElse(null) != null;
 	}
 	public static boolean isGenderValid(String gender) {
-		return !StringUtils.isEmpty(gender) && Arrays.stream(Gender.toArray())
-				.filter(g -> g.toString().equalsIgnoreCase(gender))
-				.findFirst()
-				.orElse(null) != null;
+		return Genders.from(gender) != null;
+	}
+
+	public static boolean isBirthPlaceValid(String belfioreCode) {
+		return !StringUtils.isEmpty(belfioreCode);
 	}
 }

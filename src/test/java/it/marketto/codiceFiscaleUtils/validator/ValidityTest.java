@@ -62,4 +62,12 @@ public class ValidityTest {
 		assertFalse(CfValidator.isGenderValid(""));
 		assertFalse(CfValidator.isGenderValid((String) null));
 	}
+
+	@Test
+	public void validBirthPlace() {
+		assertTrue(CfValidator.isBirthPlaceValid("H501"));
+		assertFalse(CfValidator.isBirthPlaceValid(""));
+		assertFalse(CfValidator.isBirthPlaceValid(null));
+		assertFalse(CfValidator.isBirthPlaceValid("Moon"));
+	}
 }
