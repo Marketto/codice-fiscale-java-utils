@@ -25,6 +25,12 @@ public enum Genders {
 				.findFirst()
 				.orElse(null);
 	}
+	public static Genders from(char value) {
+		return Arrays.stream(values())
+				.filter(gender -> gender.toString().substring(0, 1).equalsIgnoreCase(String.valueOf(value)))
+				.findFirst()
+				.orElse(null);
+	}
 	public static Genders from(int value) {
 		return Arrays.stream(values())
 				.filter(gender -> Range.between(0, MAX_MONTH_DAY).contains(value - gender.toValue()))

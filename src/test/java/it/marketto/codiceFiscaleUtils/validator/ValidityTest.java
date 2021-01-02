@@ -15,12 +15,12 @@ public class ValidityTest {
 
 	@Test
 	public void validateCodiceFiscale() {
-		assertTrue(CfValidator.codiceFiscale("VRNGNY07D68C351V").isValid());
-		assertTrue(CfValidator.codiceFiscale("MRNMIA02E45L219X").isValid());
-		assertTrue(CfValidator.codiceFiscale("GSTPPP31C06D620Z").isValid());
-		assertFalse(CfValidator.codiceFiscale("VRNGNY07D68C351K").isValid());
-		assertFalse(CfValidator.codiceFiscale("").isValid());
-		assertFalse(CfValidator.codiceFiscale(null).isValid());
+		assertTrue(CfValidator.isCodiceFiscaleValid("VRNGNY07D68C351V"));
+		assertTrue(CfValidator.isCodiceFiscaleValid("MRNMIA02E45L219X"));
+		assertTrue(CfValidator.isCodiceFiscaleValid("GSTPPP31C06D620Z"));
+		assertFalse(CfValidator.isCodiceFiscaleValid("VRNGNY07D68C351K"));
+		assertFalse(CfValidator.isCodiceFiscaleValid(""));
+		assertFalse(CfValidator.isCodiceFiscaleValid(null));
 	}
 
 	@Test
@@ -35,7 +35,7 @@ public class ValidityTest {
 	@Test
 	public void validateFirstName() {
 		assertTrue(CfValidator.isFirstNameValid("Test"));
-		assertTrue(CfValidator.isFirstNameValid("Tést N'àme"));
+		assertTrue(CfValidator.isFirstNameValid("Tést Nàme"));
 		assertFalse(CfValidator.isFirstNameValid("@!#"));
 		assertFalse(CfValidator.isFirstNameValid(""));
 		assertFalse(CfValidator.isFirstNameValid(""));
@@ -43,8 +43,8 @@ public class ValidityTest {
 
 	@Test
 	public void validateBirthDate() {
-		assertTrue(CfValidator.isBirthDateValid(LocalDate.parse("1999-01-01")));
-		assertTrue(CfValidator.isBirthDateValid(LocalDate.parse("2000-02-28")));
+		assertTrue(CfValidator.isBirthDateValid("1999-01-01"));
+		assertTrue(CfValidator.isBirthDateValid("2000-02-28"));
 		assertTrue(CfValidator.isBirthDateValid(1999, 1, 1));
 		assertTrue(CfValidator.isBirthDateValid(2020, 12, 31));
 		assertFalse(CfValidator.isBirthDateValid(1999, 2, 30));
@@ -60,7 +60,7 @@ public class ValidityTest {
 		assertFalse(CfValidator.isGenderValid('X'));
 		assertTrue(CfValidator.isGenderValid("Male"));
 		assertFalse(CfValidator.isGenderValid(""));
-		assertFalse(CfValidator.isGenderValid((String) null));
+		assertFalse(CfValidator.isGenderValid(null));
 	}
 
 	@Test
