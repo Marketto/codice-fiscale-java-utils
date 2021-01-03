@@ -1,6 +1,5 @@
 package it.marketto.codiceFiscaleUtils.classes;
 
-import it.marketto.codiceFiscaleUtils.constants.CfMatchers;
 import it.marketto.codiceFiscaleUtils.constants.PersonalInfoMatchers;
 import it.marketto.codiceFiscaleUtils.enumerators.Genders;
 import lombok.AllArgsConstructor;

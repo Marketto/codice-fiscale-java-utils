@@ -6,7 +6,6 @@ import it.marketto.codiceFiscaleUtils.classes.PersonalInfo;
 import it.marketto.codiceFiscaleUtils.enumerators.Genders;
 import it.marketto.codiceFiscaleUtils.exceptions.*;
 import org.junit.Test;
-import org.junit.Test.None;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
@@ -35,7 +34,6 @@ public class PersonalInfoToCf {
         personalInfo.setFirstName("Génny");
         personalInfo.setGender(Genders.FEMALE);
         personalInfo.setLastName("Verònesi");
-        //personalInfo.setPlace("Catania");
         personalInfo.setPlaceCode("C351");
 
         String cf = CfParser.encodeCf(personalInfo);

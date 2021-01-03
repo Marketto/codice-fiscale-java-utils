@@ -2,8 +2,6 @@ package it.marketto.codiceFiscaleUtils.gender;
 
 import it.marketto.codiceFiscaleUtils.enumerators.Genders;
 
-import java.util.Arrays;
-
 public class GenderUtils {
 	private static int MAX_MONTH_DAY = 31;
 

@@ -1,12 +1,9 @@
 package it.marketto.codiceFiscaleUtils.validator;
 
+import it.marketto.codiceFiscaleUtils.classes.CfValidator;
 import org.junit.Test;
 
-import it.marketto.codiceFiscaleUtils.classes.CfValidator;
-
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
-import java.util.Calendar;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;

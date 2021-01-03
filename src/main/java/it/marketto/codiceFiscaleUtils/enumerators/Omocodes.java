@@ -1,7 +1,5 @@
 package it.marketto.codiceFiscaleUtils.enumerators;
 
-import lombok.val;
-
 import java.util.Arrays;
 
 public enum Omocodes {

@@ -5,9 +5,9 @@ import it.marketto.codiceFiscaleUtils.constants.CfOffsets;
 import it.marketto.codiceFiscaleUtils.constants.CommonMatchers;
 import it.marketto.codiceFiscaleUtils.constants.Settings;
 import it.marketto.codiceFiscaleUtils.enumerators.BirthMonths;
+import it.marketto.codiceFiscaleUtils.enumerators.Genders;
 import it.marketto.codiceFiscaleUtils.enumerators.Omocodes;
 import it.marketto.codiceFiscaleUtils.exceptions.*;
-import it.marketto.codiceFiscaleUtils.enumerators.Genders;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.ZonedDateTime;

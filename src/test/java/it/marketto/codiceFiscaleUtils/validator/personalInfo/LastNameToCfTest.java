@@ -1,14 +1,10 @@
 package it.marketto.codiceFiscaleUtils.validator.personalInfo;
 
-import it.marketto.codiceFiscaleUtils.classes.CfDateUtils;
 import it.marketto.codiceFiscaleUtils.classes.CfParser;
-import it.marketto.codiceFiscaleUtils.classes.PersonalInfo;
-import it.marketto.codiceFiscaleUtils.enumerators.Genders;
-import it.marketto.codiceFiscaleUtils.exceptions.*;
+import it.marketto.codiceFiscaleUtils.exceptions.InvalidLastNameException;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNotNull;
 
 public class LastNameToCfTest {
     @Test
