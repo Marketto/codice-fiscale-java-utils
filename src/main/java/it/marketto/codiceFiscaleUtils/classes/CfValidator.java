@@ -34,21 +34,15 @@ public class CfValidator {
 	}
 
 	public static boolean isLastNameValid(@NotEmpty String lastName) {
-		Pattern pattern = Pattern.compile(
-				"^(" + PersonalInfoMatchers.LAST_NAME + ")$",
-				Pattern.CASE_INSENSITIVE + Pattern.UNICODE_CASE
-		);
-		return StringUtils.isNotEmpty(lastName) &&
-				pattern.matcher(lastName).find();
+		return FieldNormalizer.cleanField(lastName, Settings.MIN_NAME_LENGTH)
+			.toUpperCase()
+			.matches("^(" + PersonalInfoMatchers.LAST_NAME + ")$");
 	}
 
 	public static boolean isFirstNameValid(@NotEmpty String firstName) {
-		Pattern pattern = Pattern.compile(
-			"^(" + PersonalInfoMatchers.FIRST_NAME + ")$",
-			Pattern.CASE_INSENSITIVE + Pattern.UNICODE_CASE
-		);
-		return StringUtils.isNotEmpty(firstName) &&
-			pattern.matcher(firstName).find();
+		return FieldNormalizer.cleanField(firstName, Settings.MIN_NAME_LENGTH)
+			.toUpperCase()
+			.matches("^(" + PersonalInfoMatchers.FIRST_NAME + ")$");
 	}
 
 	public static boolean isBirthDateValid(@NotEmpty String iso8601DateString) {

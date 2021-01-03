@@ -3,6 +3,7 @@ package it.marketto.codiceFiscaleUtils.classes;
 import com.sun.istack.internal.NotNull;
 import it.marketto.codiceFiscaleUtils.constants.CfOffsets;
 import it.marketto.codiceFiscaleUtils.constants.CommonMatchers;
+import it.marketto.codiceFiscaleUtils.constants.Settings;
 import it.marketto.codiceFiscaleUtils.enumerators.BirthMonths;
 import it.marketto.codiceFiscaleUtils.enumerators.Omocodes;
 import it.marketto.codiceFiscaleUtils.exceptions.*;
@@ -96,7 +97,7 @@ public class CfParser {
         Character crc = omocodedCf.length > CfOffsets.CRC_OFFSET ? omocodedCf[CfOffsets.CRC_OFFSET] : null;
         if (crc != null) {
             String partialCf = codiceFiscale.substring(CfOffsets.CF_INIT_OFFSET, CfOffsets.CRC_OFFSET);
-            Character crcChar = CheckDigitizer.checkDigit(partialCf).toChar();
+            char crcChar = CheckDigitizer.checkDigit(partialCf).toChar();
             return (partialCf + crcChar).toUpperCase();
         }
         return codiceFiscale;
@@ -127,7 +128,7 @@ public class CfParser {
             throw new InvalidBirthYearException();
         }
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        int currentCentury = (int) Math.floor(currentYear / 100) * 100;
+        int currentCentury = (int) Math.floor((double) currentYear / 100.0) * 100;
         int centuryAdjust = (birthYear > (currentYear - currentCentury)) ? -100 : 0;
         return birthYear + currentCentury + centuryAdjust;
     }
@@ -217,11 +218,11 @@ public class CfParser {
         try {
             Matcher matcher = Pattern.compile("[" + CHAR_LIST + "]+", Pattern.CASE_INSENSITIVE)
                     .matcher(text);
-            String result = "";
+            StringBuilder result = new StringBuilder();
             while (matcher.find()) {
-                result += matcher.group();
+                result.append(matcher.group());
             }
-            return result.toCharArray();
+            return result.toString().toCharArray();
         } catch (IllegalStateException e) {
             return "".toCharArray();
         }
@@ -229,32 +230,30 @@ public class CfParser {
 
 
     public static String lastNameToCf(@NotNull String lastName) throws InvalidLastNameException {
-        String trimmedUCLastName = lastName.trim().toUpperCase();
-        if (trimmedUCLastName.length() < 2) { // || !trimmedUCLastName.matches(GenericMatchers.NAME_CHECK)) {
+        String cleanedName = FieldNormalizer.cleanField(lastName, Settings.MIN_NAME_LENGTH, null);
+        if (cleanedName == null) {
             throw new InvalidLastNameException();
         }
 
-        char[] consonants = charExtractor(trimmedUCLastName, CommonMatchers.CONSONANT_LIST);
-        char[] vowels = charExtractor(trimmedUCLastName, CommonMatchers.VOWEL_LIST);
+        char[] consonants = charExtractor(cleanedName, CommonMatchers.CONSONANT_LIST);
+        char[] vowels = charExtractor(cleanedName, CommonMatchers.VOWEL_LIST);
 
-        String partialCf = (new String(consonants) + (new String(vowels)) + "XX")
+        String partialCf = (new String(consonants) + new String(vowels) + "XX")
                 .substring(0, CfOffsets.LASTNAME_SIZE);
 
-        if (partialCf.length() < 3) {
-            throw new InvalidLastNameException();
-        }
-        return partialCf;
+        return partialCf.toUpperCase();
     }
 
     public static String firstNameToCf(@NotNull String firstName) throws InvalidFirstNameException {
-        String trimmedUCFirstName = firstName.trim().toUpperCase();
-        if (trimmedUCFirstName.length() < 2) { // || !trimmedUCFirstName.matches(GenericMatchers.NAME_CHECK)) {
+        String cleanedName = FieldNormalizer.cleanField(firstName, Settings.MIN_NAME_LENGTH, null);
+        if (cleanedName == null) {
             throw new InvalidFirstNameException();
         }
 
-        char[] consonants = charExtractor(trimmedUCFirstName, CommonMatchers.CONSONANT_LIST);
+        char[] consonants = charExtractor(cleanedName, CommonMatchers.CONSONANT_LIST);
         if (consonants.length > CfOffsets.FIRSTNAME_SIZE) {
-            return consonants[0] + (new String(consonants)).substring(2, CfOffsets.FIRSTNAME_SIZE + 1);
+            return (consonants[0] + (new String(consonants)).substring(2, CfOffsets.FIRSTNAME_SIZE + 1))
+                .toUpperCase();
         }
         try {
             return lastNameToCf(firstName);

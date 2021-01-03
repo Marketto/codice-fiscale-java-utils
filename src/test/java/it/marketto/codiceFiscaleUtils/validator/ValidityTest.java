@@ -26,8 +26,10 @@ public class ValidityTest {
 	@Test
 	public void validateLastName() {
 		assertTrue(CfValidator.isLastNameValid("Test"));
+		assertTrue(CfValidator.isLastNameValid(" Test"));
 		assertTrue(CfValidator.isLastNameValid("Tést N'àme"));
 		assertFalse(CfValidator.isLastNameValid("@!#"));
+		assertFalse(CfValidator.isLastNameValid("A"));
 		assertFalse(CfValidator.isLastNameValid(""));
 		assertFalse(CfValidator.isLastNameValid(null));
 	}
@@ -35,10 +37,12 @@ public class ValidityTest {
 	@Test
 	public void validateFirstName() {
 		assertTrue(CfValidator.isFirstNameValid("Test"));
+		assertTrue(CfValidator.isFirstNameValid(" Test"));
 		assertTrue(CfValidator.isFirstNameValid("Tést Nàme"));
 		assertFalse(CfValidator.isFirstNameValid("@!#"));
+		assertFalse(CfValidator.isFirstNameValid("B"));
 		assertFalse(CfValidator.isFirstNameValid(""));
-		assertFalse(CfValidator.isFirstNameValid(""));
+		assertFalse(CfValidator.isFirstNameValid(null));
 	}
 
 	@Test
