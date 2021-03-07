@@ -20,18 +20,22 @@ public class FirstNameToCfTest {
         assertEquals("LOE", CfParser.firstNameToCf("Olè"));
         assertEquals("CII", CfParser.firstNameToCf("Içi"));
     }
+
     @Test(expected = InvalidFirstNameException.class)
     public void firstNameToCfEmptyException() throws InvalidFirstNameException {
         CfParser.firstNameToCf("");
     }
+
     @Test(expected = InvalidFirstNameException.class)
     public void firstNameToCfSpaceException() throws InvalidFirstNameException {
         CfParser.firstNameToCf(" ");
     }
+
     @Test(expected = InvalidFirstNameException.class)
     public void firstNameToCfIncompleteException() throws InvalidFirstNameException {
         CfParser.firstNameToCf("K");
     }
+
     @Test(expected = InvalidFirstNameException.class)
     public void firstNameToCfInvalidException() throws InvalidFirstNameException {
         CfParser.firstNameToCf("@à");

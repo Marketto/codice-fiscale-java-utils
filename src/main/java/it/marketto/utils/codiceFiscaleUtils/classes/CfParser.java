@@ -1,6 +1,5 @@
 package it.marketto.utils.codiceFiscaleUtils.classes;
 
-import com.sun.istack.internal.NotNull;
 import it.marketto.utils.codiceFiscaleUtils.constants.CfOffsets;
 import it.marketto.utils.codiceFiscaleUtils.constants.CommonMatchers;
 import it.marketto.utils.codiceFiscaleUtils.constants.Settings;
@@ -10,6 +9,7 @@ import it.marketto.utils.codiceFiscaleUtils.enumerators.Omocodes;
 import it.marketto.utils.codiceFiscaleUtils.exceptions.*;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.regex.Matcher;
@@ -38,7 +38,7 @@ public class CfParser {
     }
 
     private static boolean checkBitmap(int offset) {
-    	byte binaryOffset = (byte) Math.round(Math.pow(2, offset));
+        byte binaryOffset = (byte) Math.round(Math.pow(2, offset));
         return (binaryOffset & OMOCODE_BITMAP) != 0;
     }
 
@@ -50,18 +50,19 @@ public class CfParser {
     }
 
     private static String partialCfDeomocode(String partialCodiceFiscale, int offset) {
-    	return IntStream.range(0, partialCodiceFiscale.length())
-        	.mapToObj(idx -> charOmocode(partialCodiceFiscale.charAt(idx), idx + offset))
-        	.collect(Collector.of(
-        			StringBuilder::new,
-        			StringBuilder::append,
-        			StringBuilder::append,
-        			StringBuilder::toString
-        		));
+        return IntStream.range(0, partialCodiceFiscale.length())
+                .mapToObj(idx -> charOmocode(partialCodiceFiscale.charAt(idx), idx + offset))
+                .collect(Collector.of(
+                        StringBuilder::new,
+                        StringBuilder::append,
+                        StringBuilder::append,
+                        StringBuilder::toString
+                ));
 
     }
+
     private static String partialCfDeomocode(String partialCodiceFiscale) {
-    	return partialCfDeomocode(partialCodiceFiscale, 0);
+        return partialCfDeomocode(partialCodiceFiscale, 0);
     }
 
     public static String cfDeomocode(String codiceFiscale) throws InvalidPartialCfException {
@@ -75,10 +76,11 @@ public class CfParser {
         String partialDeomocodedCf = deomocodedCf.substring(CfOffsets.LASTNAME_OFFSET, CfOffsets.CRC_OFFSET);
         return (partialDeomocodedCf + CheckDigitizer.checkDigit(deomocodedCf).toChar()).toUpperCase();
     }
+
     public static String cfDeomocode() throws InvalidPartialCfException {
-    	return cfDeomocode(null);
+        return cfDeomocode(null);
     }
-    
+
     public static String cfOmocode(String codiceFiscale, byte omocodeId) throws InvalidPartialCfException {
         if (omocodeId == 0) {
             return cfDeomocode(codiceFiscale);
@@ -86,7 +88,7 @@ public class CfParser {
         char[] omocodedCf = codiceFiscale.toCharArray();
         for (int i = codiceFiscale.length() - 1, o = 0; i >= 0; i--) {
             if ((Math.round(Math.pow(2, i)) & OMOCODE_BITMAP) != 0) {
-            	boolean charToEncode = (Math.round(Math.pow(2, o)) & omocodeId) != 0;
+                boolean charToEncode = (Math.round(Math.pow(2, o)) & omocodeId) != 0;
                 boolean isOmocode = Pattern.matches("^" + CommonMatchers.NUMBER_LIST + "$", String.valueOf(omocodedCf[i]));
                 if (charToEncode != isOmocode) {
                     omocodedCf[i] = Omocodes.from(omocodedCf[i]).toChar();
@@ -102,18 +104,20 @@ public class CfParser {
         }
         return codiceFiscale;
     }
+
     public static String cfOmocode(String codiceFiscale, int omocodeId) throws InvalidPartialCfException {
-    	return cfOmocode(codiceFiscale, (byte) omocodeId);
+        return cfOmocode(codiceFiscale, (byte) omocodeId);
     }
+
     public static String cfOmocode(String codiceFiscale) throws InvalidPartialCfException {
-    	return cfOmocode(codiceFiscale, 0);
+        return cfOmocode(codiceFiscale, 0);
     }
 
     /**
      * Parse birth year information
      */
     public static int cfToBirthYear(String codiceFiscale) throws EmptyCfException, IncompleteCfException, InvalidBirthYearException {
-        if (StringUtils.isEmpty(codiceFiscale)){
+        if (StringUtils.isEmpty(codiceFiscale)) {
             throw new EmptyCfException();
         }
         if (codiceFiscale.length() < CfOffsets.YEAR_OFFSET + CfOffsets.YEAR_SIZE) {
@@ -124,7 +128,7 @@ public class CfParser {
         int birthYear;
         try {
             birthYear = Integer.parseInt(partialCfDeomocode(cfBirthYearPart, CfOffsets.YEAR_OFFSET), 10);
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             throw new InvalidBirthYearException();
         }
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -137,7 +141,7 @@ public class CfParser {
      * Parse birth month information
      */
     public static int cfToBirthMonth(String codiceFiscale) throws EmptyCfException, IncompleteCfException, InvalidBirthMonthException {
-        if (StringUtils.isEmpty(codiceFiscale)){
+        if (StringUtils.isEmpty(codiceFiscale)) {
             throw new EmptyCfException();
         }
         if (codiceFiscale.length() < CfOffsets.MONTH_OFFSET + CfOffsets.MONTH_SIZE) {
@@ -202,7 +206,7 @@ public class CfParser {
         int birthDay = cfToBirthDay(codiceFiscale);
         int birthMonth = cfToBirthMonth(codiceFiscale);
         int birthYear = cfToBirthYear(codiceFiscale);
-        
+
         ZonedDateTime birthDate = CfDateUtils.toZoneDateTime(birthYear, birthMonth, birthDay);
         if (birthDate == null) {
             throw new InvalidBirthDateException();
@@ -253,7 +257,7 @@ public class CfParser {
         char[] consonants = charExtractor(cleanedName, CommonMatchers.CONSONANT_LIST);
         if (consonants.length > CfOffsets.FIRSTNAME_SIZE) {
             return (consonants[0] + (new String(consonants)).substring(2, CfOffsets.FIRSTNAME_SIZE + 1))
-                .toUpperCase();
+                    .toUpperCase();
         }
         try {
             return lastNameToCf(firstName);
@@ -267,7 +271,7 @@ public class CfParser {
     }
 
     public static char dateMonthToCf(@NotNull ZonedDateTime date) {
-        return BirthMonths.from(date.getMonthValue() -1).toChar();
+        return BirthMonths.from(date.getMonthValue() - 1).toChar();
     }
 
     public static String dateDayGenderToCf(@NotNull ZonedDateTime date, Genders gender) {
@@ -279,11 +283,11 @@ public class CfParser {
             return null;
         }
         String partialCf = lastNameToCf(personalInfo.getLastName())
-            + firstNameToCf(personalInfo.getFirstName())
-            + dateYearToCf(personalInfo.getDate())
-            + dateMonthToCf(personalInfo.getDate())
-            + dateDayGenderToCf(personalInfo.getDate(), personalInfo.getGender())
-            + personalInfo.getPlaceCode();
+                + firstNameToCf(personalInfo.getFirstName())
+                + dateYearToCf(personalInfo.getDate())
+                + dateMonthToCf(personalInfo.getDate())
+                + dateDayGenderToCf(personalInfo.getDate(), personalInfo.getGender())
+                + personalInfo.getPlaceCode();
 
         try {
             return partialCf + CheckDigitizer.checkDigit(partialCf);

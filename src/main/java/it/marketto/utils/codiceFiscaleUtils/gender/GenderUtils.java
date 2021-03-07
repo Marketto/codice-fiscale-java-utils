@@ -3,9 +3,9 @@ package it.marketto.utils.codiceFiscaleUtils.gender;
 import it.marketto.utils.codiceFiscaleUtils.enumerators.Genders;
 
 public class GenderUtils {
-	private static int MAX_MONTH_DAY = 31;
+    private static final int MAX_MONTH_DAY = 31;
 
-	public static Integer getDay(int genderDay) {
+    public static Integer getDay(int genderDay) {
         final int plainDay = genderDay % Genders.FEMALE.toValue();
         return (plainDay > 0 && plainDay <= MAX_MONTH_DAY) ? plainDay : null;
     }

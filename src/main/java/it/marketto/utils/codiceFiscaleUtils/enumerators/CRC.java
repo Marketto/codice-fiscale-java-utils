@@ -30,29 +30,31 @@ public enum CRC {
     Y(24),
     X(25);
 
-	private int crcValue;
-	CRC(int value) {
-		this.crcValue = value;
-	}
-	
-	public int toValue() {
-		return crcValue;
-	}
-	
-	public char toChar() {
-		return toString().charAt(0);
-	}
+    private final int crcValue;
 
-	public static CRC from(char crcChar) {
-		return Arrays.stream(values())
-			.filter(crc -> crc.toString().equalsIgnoreCase(String.valueOf(crcChar)))
-			.findFirst()
-            .orElse(null);
-	}
-	public static CRC from(int value) {
-		return Arrays.stream(values())
-			.filter(crc -> crc.toValue() == value)
-			.findFirst()
-            .orElse(null);
-	}
+    CRC(int value) {
+        this.crcValue = value;
+    }
+
+    public int toValue() {
+        return crcValue;
+    }
+
+    public char toChar() {
+        return toString().charAt(0);
+    }
+
+    public static CRC from(char crcChar) {
+        return Arrays.stream(values())
+                .filter(crc -> crc.toString().equalsIgnoreCase(String.valueOf(crcChar)))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public static CRC from(int value) {
+        return Arrays.stream(values())
+                .filter(crc -> crc.toValue() == value)
+                .findFirst()
+                .orElse(null);
+    }
 }

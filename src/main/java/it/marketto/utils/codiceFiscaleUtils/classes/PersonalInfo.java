@@ -17,7 +17,7 @@ import java.time.ZonedDateTime;
 public class PersonalInfo {
     @NotEmpty
     @Pattern(regexp = "^(" + PersonalInfoMatchers.FIRST_NAME + ")$")
-	private String firstName;
+    private String firstName;
 
     @NotEmpty
     @Pattern(regexp = "^(" + PersonalInfoMatchers.LAST_NAME + ")$")

@@ -16,8 +16,11 @@ public enum BirthMonths {
     S(10),
     T(11);
 
-    private int matchingMonth;
-    BirthMonths(int value) { this.matchingMonth = value; }
+    private final int matchingMonth;
+
+    BirthMonths(int value) {
+        this.matchingMonth = value;
+    }
 
     public int toValue() {
         return matchingMonth;
@@ -33,6 +36,7 @@ public enum BirthMonths {
                 .findFirst()
                 .orElse(null);
     }
+
     public static BirthMonths from(int val) {
         return Arrays.stream(values())
                 .filter(month -> month.toValue() == val)
